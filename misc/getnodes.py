@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 # Copyright (c) 2018 Håvard Pettersson <mail@haavard.me>.
@@ -23,17 +23,15 @@ import re
 import sys
 import json
 import datetime
-import textwrap
 import urllib.request
 
 if __name__ == '__main__':
-    with urllib.request.urlopen('https://nodes.tox.chat/json') as response:
-        data = json.load(response)
-
+    response = urllib.request.urlopen('https://nodes.tox.chat/json').read()
+    data = json.loads(response.decode('utf-8'))
     # get online nodes that are defined by IP address
     nodes = [node for node in data['nodes']
-                  if (node['status_tcp'] or node['status_udp'])
-                    and re.match(r'^\d+\.\d+\.\d+\.\d+$', node['ipv4'])]
+             if (node['status_tcp'] or node['status_udp'])
+             and re.match(r'^\d+\.\d+\.\d+\.\d+$', node['ipv4'])]
 
     # extract relevant values from node dictionaries
     addresses = [node['ipv4'] for node in nodes]
