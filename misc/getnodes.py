@@ -20,7 +20,6 @@
 #
 
 import re
-import sys
 import json
 import datetime
 import urllib.request
